@@ -2,9 +2,6 @@ import numpy as np
 
 
 def sigmoid(x):
-    """
-    Calculate sigmoid
-    """
     return 1 / (1 + np.exp(-x))
 
 
@@ -26,21 +23,18 @@ output_layer_in = np.dot(hidden_layer_output, weights_hidden_output)
 output = sigmoid(output_layer_in)
 
 ## Backwards pass
-## TODO: Calculate output error
-error = None
+error = (target-output)
 
-# TODO: Calculate error term for output layer
-output_error_term = None
+output_error_term = error*output*(1-output)
 
-# TODO: Calculate error term for hidden layer
-hidden_error_term = None
+hidden_error_term = np.dot(output_error_term, weights_hidden_output) * \
+                    hidden_layer_output * (1 - hidden_layer_output)
+delta_w_h_o = learnrate*output_error_term*hidden_layer_output
 
-# TODO: Calculate change in weights for hidden layer to output layer
-delta_w_h_o = None
+delta_w_i_h = learnrate * hidden_error_term * x[:, None]
 
-# TODO: Calculate change in weights for input layer to hidden layer
-delta_w_i_h = None
-
+print('Hidden Error Term:')
+print(hidden_error_term)
 print('Change in weights for hidden layer to output layer:')
 print(delta_w_h_o)
 print('Change in weights for input layer to hidden layer:')
